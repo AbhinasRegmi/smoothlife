@@ -5,7 +5,7 @@ from dataclasses import dataclass
 @dataclass(frozen=True)
 class MagicNums:
     # outer_radius: float = 11.0
-    outer_radius: float = 50.0
+    outer_radius: float = 11
     alpha: float = 0.028
     b1: float = 0.278
     b2: float = 0.365

@@ -18,5 +18,5 @@ def update(frame):
     plot.set_array(base_grid)
     return plot,
 
-animation = animation.FuncAnimation(fig, update, frames=range(10000), interval=200)
+animation = animation.FuncAnimation(fig, update, frames=range(10000), interval=10)
 plt.show()
