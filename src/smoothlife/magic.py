@@ -4,14 +4,21 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class MagicNums:
-    # outer_radius: float = 11.0
-    outer_radius: float = 11
+    # outer_radius: float = 27
     alpha: float = 0.028
     b1: float = 0.278
     b2: float = 0.365
     d1: float = 0.267
     d2: float = 0.445
     dt: float = 0.05
+
+    outer_radius: float = 50
+    # alpha: float = 0.028
+    # b1: float = 0.278
+    # b2: float = 0.365
+    # d1: float = 0.267
+    # d2: float = 0.445
+    # dt: float = 0.1
 
 
 class MagicFunc:
