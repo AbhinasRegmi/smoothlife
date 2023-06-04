@@ -1,0 +1,11 @@
+pyproject.toml
+src/smoothlife/__init__.py
+src/smoothlife/display.py
+src/smoothlife/grid.py
+src/smoothlife/magic.py
+src/smoothlife/main.py
+src/smoothlife.egg-info/PKG-INFO
+src/smoothlife.egg-info/SOURCES.txt
+src/smoothlife.egg-info/dependency_links.txt
+src/smoothlife.egg-info/requires.txt
+src/smoothlife.egg-info/top_level.txt
