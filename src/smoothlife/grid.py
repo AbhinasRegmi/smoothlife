@@ -9,8 +9,8 @@ from smoothlife.magic import MagicFunc
 
 @dataclass(frozen=True)
 class GRID:
-    WIDTH: int = 50
-    HEIGHT: int = 50
+    WIDTH: int = 500
+    HEIGHT: int = 500
 
 def random_init_center(arr, center_size):
     # Get the dimensions of the input array
@@ -36,53 +36,51 @@ def random_init_center(arr, center_size):
 
 
 
-def calculating_m_n(cx: int , cy: int, grid: np.ndarray, o_radius: float = MagicNums.outer_radius):
-    """
-    optimized version for calculating m, n
-    """
-    i_radius: float = o_radius / 3.0
-
-    y_indices, x_indices = np.indices(grid.shape)
-    distance_squared = (cx - x_indices) ** 2 + (cy - y_indices) ** 2
-
-    inner_circle = distance_squared <= i_radius ** 2
-    outer_circle = np.logical_and(distance_squared > i_radius ** 2, distance_squared <= o_radius ** 2)
-
-    m_inner = np.mean(grid[inner_circle])
-    m_outer = np.mean(grid[outer_circle])
-
-    return m_inner, m_outer
-
-
-# def calc_m_n(cx: int, cy: int, grid: np.ndarray, o_radius: float = MagicNums.outer_radius) -> Tuple[float, float]:
+# def calculating_m_n(cx: int , cy: int, grid: np.ndarray, o_radius: float = MagicNums.outer_radius):
 #     """
-#     Get center for the circle cx, cy and  compute m, n with radius in that grid.
+#     optimized version for calculating m, n
 #     """
 #     i_radius: float = o_radius / 3.0
 
-#     m_inner: float = 0.0
-#     area_inner: int = 0
-
-#     n_outer: float = 0.0
-#     area_outer: int = 0
-
-#     for dy in range(int(-o_radius), int(o_radius) + 1):
-#         for dx in range(int(-o_radius), int(o_radius) + 1):
-#             px_grid: int = (dx + cx) % GRID.WIDTH
-#             py_grid: int = (dy + cy) % GRID.HEIGHT
-
-#             if(dx ** 2 + dy ** 2 <= i_radius ** 2):
-#                 m_inner += grid[py_grid, px_grid]
-#                 area_inner += 1
-
-#             elif( dx ** 2 + dy ** 2 <= o_radius ** 2):
-#                 n_outer += grid[py_grid, px_grid]
-#                 area_outer += 1
+#     y_indices, x_indices = np.indices(grid.shape)
     
-#     m_inner /= area_inner
-#     n_outer /= area_outer
+#     distance_squared = (cx - x_indices) ** 2 + (cy - y_indices) ** 2
 
-#     return m_inner, n_outer
+#     inner_circle = distance_squared <= i_radius ** 2
+#     outer_circle = np.logical_and(distance_squared > i_radius ** 2, distance_squared <= o_radius ** 2)
+
+
+#     m_inner = np.mean(grid[inner_circle])
+#     m_outer = np.mean(grid[outer_circle])
+
+#     grid[outer_circle] = 1
+
+#     return m_inner, m_outer
+
+
+def calculating_m_n(cx: int, cy: int, grid: np.ndarray, o_radius: float = MagicNums.outer_radius) -> Tuple[float, float]:
+    """
+    Get center for the circle cx, cy and  compute m, n with radius in that grid.
+    """
+    i_radius = o_radius / 3
+    height, width = grid.shape
+    yy, xx = np.mgrid[0:height, 0:width]
+
+    dx = np.minimum(np.abs(xx - cx), width - np.abs(xx - cx))
+    dy = np.minimum(np.abs(yy - cy), height - np.abs(yy - cy))
+
+    distance_sq = dx ** 2 + dy ** 2
+
+    inner_circle = distance_sq <= i_radius ** 2
+    outer_circle = np.logical_and(distance_sq > i_radius ** 2, distance_sq <= o_radius ** 2)
+
+    m_inner = np.mean(grid[inner_circle])
+    n_outer = np.mean(grid[outer_circle])
+
+    grid[inner_circle] = 1
+    grid[outer_circle] = 1
+
+    return m_inner, n_outer
 
 def update_update_grid(base_grid_obj: np.ndarray) -> np.ndarray:
     """
