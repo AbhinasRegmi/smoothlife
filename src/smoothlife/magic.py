@@ -1,18 +1,22 @@
 from math import exp
 from dataclasses import dataclass
 
+@dataclass(frozen=True)
+class GRID:
+    WIDTH: int = 35
+    HEIGHT: int = 35
 
 @dataclass(frozen=True)
 class MagicNums:
-    # outer_radius: float = 27
+    outer_radius: float = 29
     alpha: float = 0.028
     b1: float = 0.278
     b2: float = 0.365
     d1: float = 0.267
     d2: float = 0.445
-    dt: float = 0.05
+    dt: float = 0.15
 
-    outer_radius: float = 50
+    # outer_radius: float = 27
     # alpha: float = 0.028
     # b1: float = 0.278
     # b2: float = 0.365
