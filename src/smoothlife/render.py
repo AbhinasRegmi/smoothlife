@@ -1,3 +1,5 @@
+import sys
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
@@ -25,6 +27,11 @@ def _update(frame):
     plot.set_array(base_grid)
     return plot,
 
-def now(frames: int = 1000):
-    animation = animation.FuncAnimation(fig, _update, frames=range(10000), interval=0)
+def now(frame: int = 1000):
+    global animation
+    animation = animation.FuncAnimation(fig, _update, frames=range(frame), interval=0)
     plt.show()
+
+    sys.exit()
+
+    
